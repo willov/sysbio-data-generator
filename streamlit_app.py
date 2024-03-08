@@ -108,13 +108,12 @@ sim_results.insert(0, 'Time', sim.timevector)
 sim.Simulate(timevector = times, resetstatesderivatives=True)
 
 mean = sim.featuredata[:,sim.featurenames.index(feature)]
-mean = mean+np.random.normal(-0.003, 0.003, len(mean))
+mean = mean+np.random.normal(0, 0.004, len(mean))
 mean = list(np.abs(mean))
 if zero_not_in_times:
     mean.pop(0)
     times.pop(0)
 sem = list(np.random.uniform(0.003, 0.012, len(mean)))
-
 st.markdown("## The experimental data for the defined prediction experiment")
 st.subheader("The new data as a time-series plot")
 
