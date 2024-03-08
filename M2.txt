@@ -1,0 +1,45 @@
+########## NAME
+M2
+########## METADATA
+timeunit = m
+########## MACROS
+########## STATES
+d/dt(R) = r2-r1
+d/dt(Rp) = r1-r2
+d/dt(S) = r4-r5
+d/dt(Sp) = r5-r4
+d/dt(A) = - r3
+
+R(0) = 1.0
+Rp(0) = 0.0
+S(0) = 1.0
+Sp(0) = 0.0
+A(0) = 0.0
+########## PARAMETERS
+k1 = 5.0
+k2 = 20.0
+kfeed = 10.0
+k4 = 15.0
+k5 = 30.0
+########## VARIABLES
+r1 = R*A*k1
+r2 = Rp*k2
+r3 = A*Sp*kfeed
+r4 = Sp*k4
+r5 = S*Rp*k5
+########## FUNCTIONS
+########## EVENTS
+event1 = A_in>0.001, A, A_in
+event2 = A_in=0
+########## OUTPUTS
+########## INPUTS
+A_in = A_in @ 0
+########## FEATURES
+Receptor (inactive) = R
+Receptor phosphorylation = Rp
+Receptor substrate (inactive) = S
+Receptor substrate phosphorylation = Sp
+Activator = A
+input = A_in
+
+
