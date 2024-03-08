@@ -4,7 +4,6 @@ import subprocess
 import json
 import numpy as np
 import streamlit as st
-import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import pandas as pd
 
@@ -117,7 +116,7 @@ if zero_not_in_times:
 sem = list(np.random.uniform(0.003, 0.012, len(mean)))
 
 st.markdown("## The experimental data for the defined prediction experiment")
-st.subheader("A plot of the new data")
+st.subheader("The new data as a time-series plot")
 
 layout = go.Layout(
     margin=go.layout.Margin(
@@ -141,9 +140,15 @@ data = {"input": {"t": tvalues, "f": fvalues},
         "mean": mean,
         "SEM": sem}
 
+st.subheader("The new data as a table")
+data_table = data.copy()
+data_table.pop("input")
+st.table(pd.DataFrame(data_table))
+
 st.markdown(f"""
-### The new data in JSON format 
+### The new data in the JSON format 
 ```json
 {json.dumps({"prediction": data}, indent=4)}
 ```
 """)
+
