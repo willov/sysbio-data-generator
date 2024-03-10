@@ -117,7 +117,6 @@ sem = mean*np.random.uniform(0.07, 0.17, len(mean))
 sem = [s if s!=0 else float(np.median(sem)*np.random.uniform(0.9, 1.1,1)) for s in sem] # replace sem = 0 the median of the other values
 
 st.markdown("## The experimental data for the defined prediction experiment")
-st.subheader("The new data as a time-series plot")
 
 layout = go.Layout(
     margin=go.layout.Margin(
@@ -129,7 +128,7 @@ layout = go.Layout(
 )
 
 fig = go.Figure(layout=layout)
-fig.add_trace(go.Scatter(x=sim_results['Time'], y=sim_results[feature], mode='lines', name=feature))
+# fig.add_trace(go.Scatter(x=sim_results['Time'], y=sim_results[feature], mode='lines', name=feature)) # For debugging purposes
 fig.add_trace(go.Scatter(x=times, y=mean, mode='markers', name="Experimental data", error_y=dict(type='data', array=sem, visible=True)))
 fig.update_layout(showlegend=False, xaxis_title="Time (min)", yaxis_title=feature)
 
@@ -141,15 +140,16 @@ data = {"input": {"t": tvalues, "f": fvalues},
         "mean": mean,
         "SEM": sem}
 
+st.markdown(f"""
+### The new data formatted as a JSON string 
+```json
+{json.dumps({"prediction": data})}
+```
+""")
+
 st.subheader("The new data as a table")
 data_table = data.copy()
 data_table.pop("input")
 st.table(pd.DataFrame(data_table))
 
-st.markdown(f"""
-### The new data in the JSON format 
-```json
-{json.dumps({"prediction": data}, indent=4)}
-```
-""")
 
